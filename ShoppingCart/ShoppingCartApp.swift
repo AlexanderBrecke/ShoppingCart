@@ -13,10 +13,11 @@ struct ShoppingCartApp: App {
         WindowGroup {
             NavigationView{
                 ContentView()
+                    .background(Color("BackgroundColor"))
                     .navigationTitle("Shopping cart")
                     .navigationBarTitleDisplayMode(.inline)
             }
-            //ContentView()
+            .navigationViewStyle(StackNavigationViewStyle())
 
             
         }

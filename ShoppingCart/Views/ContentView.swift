@@ -42,34 +42,45 @@ struct ContentView: View, IQuantityChange {
     
     var body: some View {
         
-        VStack{
-            ScrollView{
-                ForEach(viewModel.cart ?? [], id: \.self.product.id){ item in
+        switch(viewModel.state){
+            case Appstate.loading:
+                ProgressView()
+        case Appstate.success:
+            VStack{
+                ScrollView{
+                    ForEach(viewModel.cart ?? [], id: \.self.product.id){ item in
+                        
+                        ItemCardView(item:item, quantityChange: self)
+                        
+                    }
+                }
+                
+                if(viewModel.itemsInCart > 0){
                     
-                    ItemCardView(item:item, quantityChange: self)
+                    HStack{
+                        Image("cart")
+                            .frame(width: 32.0, height: 32.0)
+                        VStack{
+                            
+                            Text("\(viewModel.itemsInCart) products")
+                                .font(Font.custom("Rubik-Medium", size: 14.0))
+                        }
+                        
+                        VStack{
+                            Text(String(format: "kr %.2f", viewModel.cartPrice))
+                                .font(Font.custom("Rubik-Medium", size: 14.0))
+                        }
+                    }
                     
                 }
             }
-            
-            if(viewModel.itemsInCart > 0){
-                
-                HStack{
-                    Image("cart")
-                        .frame(width: 32.0, height: 32.0)
-                    VStack{
-                        
-                        Text("\(viewModel.itemsInCart) products")
-                            .font(Font.custom("Rubik-Medium", size: 14.0))
-                    }
-                    
-                    VStack{
-                        Text(String(format: "kr %.2f", viewModel.cartPrice))
-                            .font(Font.custom("Rubik-Medium", size: 14.0))
-                    }
-                }
-                
+        case Appstate.error:
+            Button("Reload"){
+                viewModel.loadCart()
             }
         }
+        
+        
         
         
         

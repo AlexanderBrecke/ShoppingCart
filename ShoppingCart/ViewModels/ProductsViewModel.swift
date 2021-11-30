@@ -8,10 +8,21 @@
 import Foundation
 import SwiftUI
 
+enum Appstate{
+    case loading
+    case error
+    case success
+}
+
 
 class ProductsViewModel: ObservableObject{
     
     let dataService:DataService = DataService()
+    
+    private let defaults = UserDefaults.standard
+    private var quantityList:[Int] = []
+    
+    @Published var state = Appstate.loading
     
     @Published var cart: [Item]?
     
@@ -22,6 +33,33 @@ class ProductsViewModel: ObservableObject{
     init(){
         loadCart()
     }
+    
+    func updateQuantity(){
+        if !quantityList.isEmpty{
+            for i in 0 ..< quantityList.count{
+                if quantityList[i] > 1 {
+                    changeItemQuantity(index: i, howMany: (quantityList[i] - 1))
+                }
+            }
+        }
+    }
+    
+    func saveQuantity(){
+        
+        var newQuantities: [Int] = []
+        
+        for item in cart!{
+            newQuantities.append(item.quantity)
+        }
+        
+        defaults.set(newQuantities, forKey: "ItemQuantity")
+    }
+    
+    func loadQuantity(){
+        let savedQuantity = defaults.object(forKey: "ItemQuantity") as? [Int] ?? [Int]()
+        quantityList = savedQuantity;
+        updateQuantity()
+    }
 
     
     func changeItemQuantity(index: Int, howMany: Int) {
@@ -29,6 +67,7 @@ class ProductsViewModel: ObservableObject{
         objectWillChange.send()
         self.cart?[index].addQuantity(howMany: howMany)
         updateItemsInCart()
+        saveQuantity()
     }
     
     func updateItemsInCart(){
@@ -64,6 +103,7 @@ class ProductsViewModel: ObservableObject{
                 self?.recieveItems(result: result)
             }
         } else {
+            state = Appstate.error
             print("-- URL format failure --  From: ProductsViewModel loadCart")
         }
     }
@@ -73,8 +113,12 @@ class ProductsViewModel: ObservableObject{
         case .success(let items):
             DispatchQueue.main.async { [weak self] in
                 self?.cart = items?.items
+                self?.loadQuantity()
+                self?.state = Appstate.success
+                
             }
         case .failure(let error):
+            state = Appstate.error
             print(error)
         }
     }
