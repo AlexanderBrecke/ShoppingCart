@@ -11,7 +11,14 @@ import SwiftUI
 struct ShoppingCartApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            NavigationView{
+                ContentView()
+                    .navigationTitle("Shopping cart")
+                    .navigationBarTitleDisplayMode(.inline)
+            }
+            //ContentView()
+
+            
         }
     }
 }

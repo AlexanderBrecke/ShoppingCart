@@ -22,7 +22,7 @@ struct ItemCardView: View{
         
         VStack(alignment: .leading){
             HStack{
-                ZStack{
+                ZStack(alignment: .topLeading){
                     Image(uiImage: item.product.images[0].thumbnail.url.load())
                         .resizable()
                         .scaledToFit()
@@ -68,9 +68,10 @@ struct ItemCardView: View{
                     
                 }
                 .padding()
+                //.background(Color.green)
                 Spacer()
                 
-                VStack(alignment: .center){
+                VStack(alignment: .trailing){
                     
                     if (item.quantity - 1) < 1 {
                         
@@ -106,7 +107,8 @@ struct ItemCardView: View{
                     
                 }
                 .padding()
-                Spacer()
+                //.background(Color.blue)
+                
                 
                 
                 
@@ -150,7 +152,15 @@ struct ItemCardView: View{
                         
                     }
                     
-                }                
+                } else {
+                    Button(action: {
+                        
+                    }) {
+                        Image("plus_circle_fill")
+                            .foregroundColor(Color("AccentActionColor"))
+                            .opacity(0.5)
+                    }
+                }
                 
                 
                 
@@ -159,12 +169,6 @@ struct ItemCardView: View{
             Divider()
         }
         .frame(maxWidth: .infinity)
-        .background(Color.blue)
-        
-        
-        
-
-        
     }
     
 }

@@ -42,40 +42,36 @@ struct ContentView: View, IQuantityChange {
     
     var body: some View {
         
-        
-        ScrollView{
-            ForEach(viewModel.cart ?? [], id: \.self.product.id){ item in
-                
-                ItemCardView(item:item, quantityChange: self)
-                
-            }
-        }
-//        List(viewModel.cart ?? [], id: \.self.product.id){ item in
-//            ItemCardView(item: item, quantityChange: self)
-//        }
-//        .frame(maxWidth: .infinity)
-//        .buttonStyle(BorderlessButtonStyle())
-        
-        
-        
-        if(viewModel.itemsInCart > 0){
-            
-            HStack{
-                Image("cart")
-                    .frame(width: 32.0, height: 32.0)
-                VStack{
+        VStack{
+            ScrollView{
+                ForEach(viewModel.cart ?? [], id: \.self.product.id){ item in
                     
-                    Text("\(viewModel.itemsInCart) products")
-                        .font(Font.custom("Rubik-Medium", size: 14.0))
-                }
-                
-                VStack{
-                    Text(String(format: "kr %.2f", viewModel.cartPrice))
-                        .font(Font.custom("Rubik-Medium", size: 14.0)) 
+                    ItemCardView(item:item, quantityChange: self)
+                    
                 }
             }
             
+            if(viewModel.itemsInCart > 0){
+                
+                HStack{
+                    Image("cart")
+                        .frame(width: 32.0, height: 32.0)
+                    VStack{
+                        
+                        Text("\(viewModel.itemsInCart) products")
+                            .font(Font.custom("Rubik-Medium", size: 14.0))
+                    }
+                    
+                    VStack{
+                        Text(String(format: "kr %.2f", viewModel.cartPrice))
+                            .font(Font.custom("Rubik-Medium", size: 14.0))
+                    }
+                }
+                
+            }
         }
+        
+        
         
     }
     
