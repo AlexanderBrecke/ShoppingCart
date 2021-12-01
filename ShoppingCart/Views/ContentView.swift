@@ -54,6 +54,9 @@ struct ContentView: View, IQuantityChange {
                         
                     }
                 }
+                .onReceive(NotificationCenter.default.publisher(for: UIApplication.willResignActiveNotification)) { _ in
+                    viewModel.saveQuantity()
+                }
                 
                 if(viewModel.itemsInCart > 0){
                     

@@ -63,11 +63,8 @@ class ProductsViewModel: ObservableObject{
 
     
     func changeItemQuantity(index: Int, howMany: Int) {
-        
-        objectWillChange.send()
         self.cart?[index].addQuantity(howMany: howMany)
         updateItemsInCart()
-        saveQuantity()
     }
     
     func updateItemsInCart(){
@@ -85,8 +82,7 @@ class ProductsViewModel: ObservableObject{
                 price += (Double(item.product.grossPrice)!) * (Double(item.quantity - 1))
             }
         }
-        
-        objectWillChange.send()
+
         self.itemsInCart = inCart
         self.cartPrice = price
         
