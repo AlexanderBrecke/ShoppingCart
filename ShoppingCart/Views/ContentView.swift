@@ -17,28 +17,9 @@ struct ContentView: View, IQuantityChange {
     @ObservedObject var viewModel = ProductsViewModel()
     
     func iChangeQuantity(item: Item, howMany: Int) {
-        
-        if let index = getIndex(item: item) {
-            viewModel.changeItemQuantity(index: index, howMany: howMany)
-        }
-
+        viewModel.changeItemQuantity(id: item.product.id, howMany: howMany)
     }
 
-    
-    func getIndex(item:Item) -> Int?{
-        
-        if viewModel.cart != nil{
-            for i in 0 ..< Int(viewModel.cart!.count) {
-                if(viewModel.cart![i].product.id == item.product.id){
-                    return i
-                }
-            }
-        }
-        
-        return nil
-        
-    }
-    
     
     var body: some View {
         
@@ -46,7 +27,7 @@ struct ContentView: View, IQuantityChange {
             case Appstate.loading:
                 ProgressView()
         case Appstate.success:
-            VStack{
+            LazyVStack{
                 ScrollView{
                     ForEach(viewModel.cart ?? [], id: \.self.product.id){ item in
                         
@@ -82,10 +63,6 @@ struct ContentView: View, IQuantityChange {
                 viewModel.loadCart()
             }
         }
-        
-        
-        
-        
         
     }
     

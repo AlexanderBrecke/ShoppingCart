@@ -20,7 +20,7 @@ class ProductsViewModel: ObservableObject{
     let dataService:DataService = DataService()
     
     private let defaults = UserDefaults.standard
-    private var quantityList:[Int] = []
+    private var quantityList:[Int: Int] = [:]
     
     @Published var state = Appstate.loading
     
@@ -35,36 +35,35 @@ class ProductsViewModel: ObservableObject{
     }
     
     func updateQuantity(){
-        if !quantityList.isEmpty{
-            for i in 0 ..< quantityList.count{
-                if quantityList[i] > 1 {
-                    changeItemQuantity(index: i, howMany: (quantityList[i] - 1))
-                }
-            }
+        for item in quantityList {
+            changeItemQuantity(id: item.key, howMany: item.value)
         }
     }
     
     func saveQuantity(){
-        
-        var newQuantities: [Int] = []
-        
-        for item in cart!{
-            newQuantities.append(item.quantity)
+        guard let data = try? JSONEncoder().encode(quantityList) else {
+            return
         }
         
-        defaults.set(newQuantities, forKey: "ItemQuantity")
+        defaults.set(data, forKey: Constants.SHOPPING_CART_LETTERS)
     }
     
     func loadQuantity(){
-        let savedQuantity = defaults.object(forKey: "ItemQuantity") as? [Int] ?? [Int]()
-        quantityList = savedQuantity;
+        var savedQuantity: [Int: Int]?
+        if let data = defaults.data(forKey: Constants.SHOPPING_CART_LETTERS) {
+            savedQuantity = try? JSONDecoder().decode([Int:Int].self, from: data)
+        }
+        
+        quantityList = savedQuantity ?? [:]
         updateQuantity()
     }
-
     
-    func changeItemQuantity(index: Int, howMany: Int) {
+    
+    func changeItemQuantity(id: Int, howMany: Int) {
+        guard let index = cart?.firstIndex(where: {$0.product.id == id}) else { return }
         self.cart?[index].addQuantity(howMany: howMany)
         updateItemsInCart()
+        quantityList[id] = self.cart?[index].quantity
     }
     
     func updateItemsInCart(){
@@ -77,12 +76,10 @@ class ProductsViewModel: ObservableObject{
         }
         
         for item in cart {
-            if item.quantity > 1{
-                inCart += (item.quantity - 1)
-                price += (Double(item.product.grossPrice)!) * (Double(item.quantity - 1))
-            }
+            inCart += item.quantity
+            price += (Double(item.product.grossPrice)!) * Double(item.quantity)
         }
-
+        
         self.itemsInCart = inCart
         self.cartPrice = price
         
@@ -114,12 +111,11 @@ class ProductsViewModel: ObservableObject{
                 
             }
         case .failure(let error):
-            state = Appstate.error
-            print(error)
+            DispatchQueue.main.async { [weak self] in
+                self?.state = Appstate.error
+                print(error)
+            }
         }
     }
-    
-    
-    
     
 }

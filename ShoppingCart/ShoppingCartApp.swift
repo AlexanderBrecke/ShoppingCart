@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Foundation
 
 @main
 struct ShoppingCartApp: App {
@@ -13,7 +14,7 @@ struct ShoppingCartApp: App {
         WindowGroup {
             NavigationView{
                 ContentView()
-                    .background(Color("BackgroundColor"))
+                    .background(Color.backgroundAppColor)
                     .navigationTitle("Shopping cart")
                     .navigationBarTitleDisplayMode(.inline)
             }
