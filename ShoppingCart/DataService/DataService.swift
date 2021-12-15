@@ -7,6 +7,7 @@
 
 import Foundation
 
+// Enum of custom failures
 enum CustomFailures: Error {
     case URLFormatFailed
     case FailedToLoadData
@@ -14,7 +15,8 @@ enum CustomFailures: Error {
 
 struct DataService {
  
-    
+    // Function to fetch items from a api url
+    // Give either nullable items or an error
     func fetchItems(urlString:URL, completion: @escaping (Result<Items?, Error>) -> Void){
         URLSession(configuration: .default).dataTask(with: urlString){ data, response, error in
             
@@ -33,20 +35,14 @@ struct DataService {
         }.resume()
     }
     
-    
-    
+    // Function to parse json data into nullable items
+    // If we can decode items from the json, return the items, else return nil
     func parseJson(jsonData:Data) -> Items?{
+        
         do {
-            
-            let decoder = JSONDecoder()
-          
-            let items = try decoder.decode(Items.self, from: jsonData)
-
+            let items = try JSONDecoder().decode(Items.self, from: jsonData)
             print(items.items.count)
             return items
-            
-           
-            
         } catch {
             print("Decode error")
             return nil

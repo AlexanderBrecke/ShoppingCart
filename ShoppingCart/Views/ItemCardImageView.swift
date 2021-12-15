@@ -9,6 +9,8 @@ import Foundation
 import SwiftUI
 import SDWebImageSwiftUI
 
+// View to show the thumbnail image of a specified item
+// If the image is pressed show a sheet that shows the picture in full size
 struct ItemCardImageView: View{
     
     let item:Item

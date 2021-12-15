@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+// Extensions to get colors
 extension Color {
     
     static var secondaryTextColor = Color("SecondaryTextColor")
@@ -14,9 +15,9 @@ extension Color {
     static var backgroundAppColor = Color("BackgroundColor")
     static var outOfStockTextColor = Color("OutOfStockTextColor")
     static var accentAction = Color("AccentActionColor")
-    
 }
 
+// Extensions to get correct fonts
 extension Font {
     
     static func rubikRegular(size: CGFloat) -> Font {

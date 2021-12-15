@@ -25,8 +25,6 @@ struct Item: Codable {
     }
     
     public mutating func addQuantity(howMany:Int){
-//        print("ID: \(product.id) -- Quantity WAS: \(quantity)")
         self.quantity += howMany
-//        print("ID: \(product.id) -- Quantity Became: \(quantity)")
     }
 }

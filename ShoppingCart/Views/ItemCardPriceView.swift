@@ -8,11 +8,11 @@
 import Foundation
 import SwiftUI
 
+// View to show the price of a specified item
+// Only show if the quantity of the item is less than 1
 struct ItemCardPriceView: View{
     
     let item:Item
-    
-    @State var showSheet:Bool = false
     
     var body: some View {
         VStack(alignment: .trailing){

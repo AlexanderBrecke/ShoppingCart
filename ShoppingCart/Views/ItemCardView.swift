@@ -9,6 +9,7 @@ import Foundation
 import SwiftUI
 import SDWebImageSwiftUI
 
+// Card view to show a specific item
 struct ItemCardView: View{
     
     var item:Item

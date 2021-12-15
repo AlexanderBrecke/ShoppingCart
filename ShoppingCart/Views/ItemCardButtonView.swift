@@ -8,6 +8,9 @@
 import Foundation
 import SwiftUI
 
+// View to show buttons to add or remove quantity of a specified item
+// If quantity is less than 1 show only a plus button
+// else show a plus and minus button with the quantity in text between
 struct ItemCardButtonView: View {
     
     let item:Item
@@ -19,9 +22,7 @@ struct ItemCardButtonView: View {
             if item.quantity > 0 {
                 
                 Button(action: {
-                    
                     quantityChange.iChangeQuantity(item: item, howMany: -1)
-                    
                 }){
                     Image("minus_circle")
                 }
@@ -30,9 +31,7 @@ struct ItemCardButtonView: View {
                 Text("\(item.quantity)")
                 
                 Button(action: {
-                    
                     quantityChange.iChangeQuantity(item: item, howMany: 1)
-                    
                 }) {
                     Image("plus_circle")
                 }
@@ -40,17 +39,12 @@ struct ItemCardButtonView: View {
                 
             } else {
                 Button(action:{
-                    
                     quantityChange.iChangeQuantity(item: item, howMany: 1)
-
                 }) {
-                    
                     Image("plus_circle_fill")
                         .foregroundColor(.accentAction)
-                    
                 }
                 .frame(width: 32.0, height: 32.0)
-                
                 
             }
             

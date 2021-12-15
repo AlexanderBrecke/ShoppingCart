@@ -8,7 +8,5 @@
 import Foundation
 
 protocol IQuantityChange {
-    
     func iChangeQuantity(item: Item, howMany:Int)
-    
 }

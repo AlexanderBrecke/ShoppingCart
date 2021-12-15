@@ -9,15 +9,11 @@ import Foundation
 
 struct Utils {
     
+    // Utility function to see if we can get an URL from a string.
     public func getUrlOrNil(urlString: String) -> URL? {
         
-        if let url = URL(string: urlString){
-          
-            return url
-            
-        } else {
-            return nil
-        }
+        guard let url = URL(string: urlString) else {return nil}
+        return url
         
     }
     

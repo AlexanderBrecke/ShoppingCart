@@ -8,6 +8,7 @@
 import Foundation
 import SwiftUI
 
+// View to show the name and expanded name of a specified item
 struct ItemCardDescriptionText: View{
     
     let item:Item
@@ -16,23 +17,17 @@ struct ItemCardDescriptionText: View{
         VStack(alignment: .leading){
             Text(item.product.name)
                 .font(.rubikMedium(size: 14.0))
-                
-            
+                    
             if item.product.availability.isAvailable {
-                
                 Text(item.product.nameExtra)
                     .font(.rubikRegular(size: 14.0))
                     .foregroundColor(.secondaryTextColor)
-                
             } else {
-                
                 Text("Out of stock")
                     .font(.rubikRegular(size: 14.0))
                     .foregroundColor(.outOfStockTextColor)
                     
             }
-            
-            
         }
     }
     
