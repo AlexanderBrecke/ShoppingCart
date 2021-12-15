@@ -34,6 +34,9 @@ struct ItemCardImageView: View{
             WebImage(url:URL(string: item.product.images[0].thumbnail.url))
                 .resizable()
                 .scaledToFit()
+                .onTapGesture {
+                    showSheet = false
+                }
         })
     }
     

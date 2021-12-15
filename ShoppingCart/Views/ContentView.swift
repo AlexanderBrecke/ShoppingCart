@@ -35,7 +35,7 @@ struct ContentView: View, IQuantityChange {
                 }
             
             case Appstate.success:
-                LazyVStack{
+                VStack{
                     ScrollView{
                         ForEach(viewModel.cart ?? [], id: \.self.product.id){ item in
                             ItemCardView(item:item, quantityChange: self)
