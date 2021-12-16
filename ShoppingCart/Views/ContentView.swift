@@ -31,7 +31,7 @@ struct ContentView: View, IQuantityChange {
             
             case Appstate.error:
                 Button("Reload"){
-                    viewModel.loadCart()
+                    viewModel.tryLoadCart()
                 }
             
             case Appstate.success:

@@ -35,6 +35,21 @@ struct DataService {
         }.resume()
     }
     
+    // Function to get data from a local file
+    // This is in case the api stops working
+    func readLocalFile(forName name:String) -> Data? {
+        do {
+            if let path = Bundle.main.path(forResource: name, ofType: "json"),
+               let data = try String(contentsOfFile: path).data(using: .utf8){
+                return data
+            }
+        } catch {
+            print(error)
+            
+        }
+        return nil
+    }
+    
     // Function to parse json data into nullable items
     // If we can decode items from the json, return the items, else return nil
     func parseJson(jsonData:Data) -> Items?{

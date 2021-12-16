@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		7F221DF22720397000F4993F /* ButtonPressed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F221DF12720397000F4993F /* ButtonPressed.swift */; };
+		7F237F0C276B712C00888B3C /* LocalData.json in Resources */ = {isa = PBXBuildFile; fileRef = 7F237F0B276B712C00888B3C /* LocalData.json */; };
 		7F7053D2271B2F2F00C7756C /* ProductsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F7053D1271B2F2F00C7756C /* ProductsViewModel.swift */; };
 		7F9F243C271ECF1100E4736D /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F9F243B271ECF1100E4736D /* Item.swift */; };
 		7F9F243E271ED63D00E4736D /* Availability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F9F243D271ED63D00E4736D /* Availability.swift */; };
@@ -56,6 +57,7 @@
 
 /* Begin PBXFileReference section */
 		7F221DF12720397000F4993F /* ButtonPressed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonPressed.swift; sourceTree = "<group>"; };
+		7F237F0B276B712C00888B3C /* LocalData.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = LocalData.json; sourceTree = "<group>"; };
 		7F7053D1271B2F2F00C7756C /* ProductsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductsViewModel.swift; sourceTree = "<group>"; };
 		7F9F243B271ECF1100E4736D /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
 		7F9F243D271ED63D00E4736D /* Availability.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Availability.swift; sourceTree = "<group>"; };
@@ -219,6 +221,7 @@
 				7F9F2441271ED68C00E4736D /* Image.swift */,
 				7F9F2443271ED6B600E4736D /* Promotion.swift */,
 				7F221DF12720397000F4993F /* ButtonPressed.swift */,
+				7F237F0B276B712C00888B3C /* LocalData.json */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -363,6 +366,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7F237F0C276B712C00888B3C /* LocalData.json in Resources */,
 				7FB024722732BD9E009D58E7 /* Assets.xcassets in Resources */,
 				7FDE943F271AFD4900D51BF6 /* Preview Assets.xcassets in Resources */,
 			);

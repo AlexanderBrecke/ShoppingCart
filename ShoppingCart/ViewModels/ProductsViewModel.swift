@@ -21,6 +21,9 @@ class ProductsViewModel: ObservableObject{
     private let defaults = UserDefaults.standard
     private var quantityList:[Int: Int] = [:]
     
+    private var currentLoadTry = 0
+    private let maxLoadTries = 2
+    
     let dataService:DataService = DataService()
     
     @Published var state = Appstate.loading
@@ -28,9 +31,11 @@ class ProductsViewModel: ObservableObject{
     @Published var itemsInCart: Int = 0
     @Published var cartPrice:Double = 0.00
     
+    
     // Load the cart when we start the app
     init(){
-        loadCart()
+        tryLoadCart()
+//        loadCart()
     }
     
     // Functions dealing with user defaults
@@ -76,7 +81,7 @@ class ProductsViewModel: ObservableObject{
     }
     
     // Function to update information for the cart view
-    func updateItemsInCart(){
+    private func updateItemsInCart(){
         
         var inCart: Int = 0
         var price:Double = 0.00
@@ -95,12 +100,23 @@ class ProductsViewModel: ObservableObject{
         
     }
     
+    // Function to try and load cart from api
+    // If api doesn't work try after a couple of tries
+    // load cart from local data
+    func tryLoadCart(){
+        if(currentLoadTry < maxLoadTries){
+            loadCart()
+        } else {
+            loadCartFromLocalData()
+        }
+    }
+    
     // Function to load the cart from the url
     // Talk to the dataservice to recieve the json and pass the result to the next function
     // Set the app state to error if we get a bad url
-    func loadCart(){
+    private func loadCart(){
         
-        if let urlString = URL(string: "https://api.jsonbin.io/b/60832bec4465377a6bc6b6e6"){
+        if let urlString = URL(string: Constants.WEB_API_LINK){
             
             dataService.fetchItems(urlString: urlString){
                 [weak self] result in
@@ -110,6 +126,7 @@ class ProductsViewModel: ObservableObject{
             state = Appstate.error
             print("-- URL format failure --  From: ProductsViewModel loadCart")
         }
+        currentLoadTry += 1
     }
     
     // Function to fill the item data into the cart variable
@@ -130,5 +147,26 @@ class ProductsViewModel: ObservableObject{
             }
         }
     }
+    
+    // Function to load and fill item data into cart variable in case api does not work
+    private func loadCartFromLocalData(){
+        if let data = dataService.readLocalFile(forName: "LocalData"){
+            let items = dataService.parseJson(jsonData: data)
+            if items != nil {
+                DispatchQueue.main.async { [weak self] in
+                    self?.cart = items?.items
+                    self?.loadQuantity()
+                    self?.state = Appstate.success
+                }
+            }
+        } else {
+            print("Error reading data from local file")
+            state = Appstate.error
+            return
+        }
+        
+    }
+    
+    
     
 }
